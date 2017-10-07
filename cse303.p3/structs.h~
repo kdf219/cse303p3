@@ -1,6 +1,6 @@
 #ifndef STRUCTS_H
 #define STRUCTS_H
-#include "structs.c"
+
 /*
  *
  * Define page/sector structures here as well as utility structures

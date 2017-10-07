@@ -70,7 +70,7 @@ int verifyFileSystem(char* file) {
 void filesystem(char *file)
 {
 
-  FILE *infile = fopen(file, "r");
+  FILE infile = fopen(file, "r");
   if(infile == NULL) {
     initializeFileSystem(file);
   }
