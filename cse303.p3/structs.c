@@ -38,6 +38,7 @@ struct directory_pages {
   //page of directory entries
   int *page_address;
   int isEmpty;
+  struct folder_entry* filelocations;
   
 };
 

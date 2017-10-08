@@ -32,15 +32,16 @@ int initializeFileSystem(char *file) {
   struct allocation_pages *allocation = (struct allocation_pages*) malloc(sizeof(struct allocation_pages));
   struct directory_pages *directory = (struct directory_pages*) malloc(sizeof(struct directory_pages));
   
-  root->allocation_table_loc = 0;//no idea
-  root->root_directory_loc = 1;//maybe 1
-    
+  root->allocation_table_loc = (int) malloc(sizeof(int));
+  root->allocation_table_loc = 1;
+  root->root_directory_loc = 1;
+  printf("root sector made, ");
+
     directory->isEmpty = 1;
-  
-  struct folder_entry *folder = (struct folder_entry*) malloc(sizeof(struct folder_entry));
-  folder->name="."; //the name of the root directory should be "." i dont know if this is the way to do this
-  folder->location = 1;//same as what we say the location of the root directory is
-    
+    directory->filelocations = (struct folder_entry *) malloc(sizeof(struct folder_entry));
+    directory->filelocations->name = ".";
+    directory->filelocations->location = 1;//same as what we say the location of the root directory is
+    printf("root directory made");
     
     //memory mapping
     //void *mmap(void *addr, size_t length, int prot, int flags, int fd, off_t offset);
@@ -64,6 +65,8 @@ int verifyFileSystem(char* file) {
   
 }
 
+
+
 /*
  * filesystem() - loads in the filesystem and accepts commands
  */
@@ -74,7 +77,8 @@ void filesystem(char *file)
   if(infile == NULL) {
     initializeFileSystem(file);
   }
-
+  struct directory_pages *pwdir = (struct directory_pages *)malloc(sizeof(struct directory_pages));
+ 
 	/* pointer to the memory-mapped filesystem */
 	char *map = NULL;
 
@@ -137,15 +141,18 @@ void filesystem(char *file)
 		}
 		else if(!strncmp(buffer, "pwd", 3))
 		{
-			//pwd();
-		}
+
+		  char *name = pwdir->filelocations->name;
+		  printf("%s", name);
+		  
+      		}
 		else if(!strncmp(buffer, "cd ", 3))
 		{
 			//cd(buffer+3);
 		}
 		else if(!strncmp(buffer, "ls", 2))
 		{
-			//ls();
+		  //ls();
 		}
 		else if(!strncmp(buffer, "mkdir ", 6))
 		{
@@ -267,3 +274,5 @@ int main(int argc, char **argv)
 	filesystem(argv[1]);
 	return 0;
 }
+
+

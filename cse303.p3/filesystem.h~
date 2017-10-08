@@ -9,6 +9,7 @@
 
 //Help dialog
 void help(char *progname);
+pwd();
 //Main filesystem loop
 void filesystem(char *file);
 
